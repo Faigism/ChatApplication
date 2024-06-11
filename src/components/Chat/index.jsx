@@ -31,7 +31,7 @@ const Chat = () => {
       const userSnapshot = await get(userRef)
       const userData = userSnapshot.val()
 
-      setUser({ ...user, displayName: userData.displayName })
+      setUser({ ...user, displayName: userData?.displayName })
 
       const q = query(collection(firestoreDb, 'messages'), orderBy('timestamp'))
       const unsubscribeMessages = onSnapshot(q, (snapshot) => {
@@ -81,14 +81,14 @@ const Chat = () => {
       await addDoc(collection(firestoreDb, 'messages'), {
         uid: user?.uid,
         photoUrl: user?.photoURL,
-        displayName: user?.displayName,
+        displayName: user.displayName,
         text: newMessage,
         timestamp: serverTimestamp(),
       })
       setNewMessage('')
       setShowIcon(false)
     } catch (error) {
-      toast.error('Mesaj gönderilemedi')
+      toast.error('Failed Message')
     }
   }
 

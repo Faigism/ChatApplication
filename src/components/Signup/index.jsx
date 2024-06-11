@@ -51,6 +51,7 @@ const Signup = () => {
       })
     }
   }
+
   const createAccount = async (data) => {
     try {
       const userCredential = await createUserWithEmailAndPassword(
