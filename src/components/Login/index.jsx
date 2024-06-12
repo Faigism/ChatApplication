@@ -102,7 +102,7 @@ const Login = () => {
             {isSubmitting ? <Disabled /> : 'Login'}
           </button>
         </form>
-        <div>
+        <div className="btn-google">
           <button onClick={signInGoogle} className={style.button}>
             <i className="fa-brands fa-google"></i>
             {isSubmitting ? <Disabled /> : 'Sign In with Google'}

@@ -93,6 +93,7 @@ body {
     align-items: center;
     justify-content: center;
     height: 98vh;
+
     .input {
       background-color: rgb(240, 240, 240);
       width: 100%;
@@ -135,18 +136,24 @@ body {
           }
         }
       }
+      .btn-google {
+        display: block;
+      }
     }
   }
 }
 
 .mainChat {
-  background-color: rgb(199, 194, 194);
+  background-color: rgb(93 79 122 / 89%);
   min-width: 500px;
   .chat_content {
     overflow-y: scroll;
     padding: 10px 22px;
     height: 80vh;
     width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 60px 40px -7px;
+    display: flex;
+    flex-direction: column;
     .user {
       border-top-right-radius: 18px;
       border-bottom-left-radius: 18px;
@@ -155,8 +162,9 @@ body {
       background-color: #fff;
       width: 500px;
       position: relative;
-      margin: 40px 20px;
+      margin: 20px;
       .fa-trash {
+        cursor: pointer;
         position: absolute;
         background-color: #676767;
         padding: 10px 20px;
@@ -219,6 +227,12 @@ body {
         }
       }
     }
+    .ownMessage {
+      align-self: flex-end;
+    }
+    .otherMessage {
+      align-self: flex-start;
+    }
   }
   .container {
     display: flex;
@@ -235,11 +249,13 @@ body {
         border: none;
         outline: none;
         line-height: 18px;
-        padding: 5px 45px 5px 15px;
+        padding: 15px 25px;
+        border-radius: 15px;
+        height: 50px;
       }
       button {
         position: absolute;
-        top: 14px;
+        top: 16px;
         right: 10px;
         font-size: 22px;
         color: #087816;
@@ -261,133 +277,69 @@ body {
 }
 
 @media (max-width: 480px) {
-  .main {
-    .input_sec {
-      .input {
-        justify-content: center;
-        padding: 15px;
-        max-width: 100%;
-        display: flex;
-        flex-direction: column;
-        height: 420px;
-        h1 {
-          font-size: 25px;
-        }
-        span {
-          font-size: 16px;
-        }
-        form {
-          input {
-            font-size: 16px;
-            width: 250px;
-            &::placeholder {
-              font-size: 16px;
-            }
-          }
-          div {
-            i {
-              font-size: 16px;
-              top: 19px;
-            }
-          }
-        }
-      }
-    }
-  }
-  .mainChat {
-    min-width: 500px;
-    .chat_content {
-      overflow-y: scroll;
-      padding: 10px 22px;
-      height: 100vh;
-      width: 100%;
-      .user {
-        width: 400px;
-        .fa-trash {
-          position: absolute;
-          background-color: #676767;
-          padding: 10px 20px;
-          border-radius: 20px;
-          top: 0;
-          right: -22px;
-          font-size: 12px;
-          color: #fff;
-          font-weight: bold;
-        }
-        .formattedDate {
-          background-color: #fff;
-          position: absolute;
-          top: -16px;
-          left: 110px;
-          border-radius: 10px;
-          padding: 1px 8px;
-          width: 180px;
-          text-align: center;
-          font-size: 12px;
-        }
-        img {
-          border-radius: 100px;
-          width: 41px;
-          position: absolute;
-          top: -4px;
-          left: -30px;
-        }
-        .fa-user {
-          background-color: #fff;
-          position: absolute;
-          top: -4px;
-          left: -30px;
-          padding: 10px 11px;
-          border-radius: 100px;
-          font-size: 18px;
-        }
-        .name {
-          font-weight: bold;
-          color: #960d0d;
-          position: absolute;
-          top: 0;
-          left: 20px;
-        }
-        .text {
-          margin-top: 8px;
+  body {
+    overflow-y: scroll;
+    .main {
+      .input_sec {
+        .input {
+          justify-content: center;
+          padding: 30px 40px;
+          max-width: 100%;
           display: flex;
-          align-items: end;
-          width: 350px;
+          flex-direction: column;
+          h1 {
+            font-size: 25px;
+          }
           span {
-            position: absolute;
-            bottom: 4px;
-            right: 14px;
-            font-size: 12px;
-            margin-top: 10px;
+            font-size: 16px;
+          }
+          form {
+            input {
+              font-size: 16px;
+              width: 250px;
+              &::placeholder {
+                font-size: 16px;
+              }
+            }
+            div {
+              i {
+                font-size: 16px;
+                top: 19px;
+              }
+            }
+          }
+          .btn-google {
+            display: none;
           }
         }
       }
     }
-    .container {
-      height: 200px;
-      .chat_input {
-        width: 300px;
-        textarea {
-          width: 300px;
-        }
-        button {
-          position: absolute;
-          top: 14px;
-          right: -9px;
-          font-size: 22px;
-          color: #087816;
-          background-color: #b3b3b3;
-          padding: 2px 10px 3px 13px;
-          border-radius: 100px;
+    .mainChat {
+      .chat_content {
+        overflow-y: scroll;
+        height: 100vh;
+        .user {
+          width: 400px;
+          .formattedDate {
+            top: -16px;
+            left: 110px;
+          }
+          .text {
+            width: 350px;
+          }
         }
       }
-      .logout {
-        button {
-          background-color: bisque;
-          padding: 10px 30px;
-          cursor: pointer;
-          border-radius: 2px 20px;
-          rotate: 180deg;
+      .container {
+        height: 200px;
+        .chat_input {
+          width: 300px;
+          textarea {
+            width: 300px;
+          }
+          button {
+            top: 14px;
+            right: -2px;
+          }
         }
       }
     }

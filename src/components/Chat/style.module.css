@@ -1,0 +1,81 @@
+/* style.module.css */
+.user {
+  display: flex;
+  align-items: center;
+  margin: 10px;
+}
+
+.user.ownMessage {
+  justify-content: flex-end;
+}
+
+.user.ownMessage .text,
+.user.ownMessage .name {
+  text-align: right;
+}
+
+.user.ownMessage img {
+  order: 1; /* Move image to the right side for own messages */
+}
+
+.user img {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
+
+.user.ownMessage img {
+  margin-left: 10px;
+  margin-right: 0;
+}
+
+.text {
+  background: #f1f1f1;
+  padding: 10px;
+  border-radius: 10px;
+  max-width: 60%;
+}
+
+.user.ownMessage .text {
+  background: #d1f7c4; /* Different background for own messages */
+}
+
+.fa-trash {
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.chat_input {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-top: 1px solid #ccc;
+}
+
+.chat_input textarea {
+  flex: 1;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.chat_input button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.logout button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.formattedDate {
+  display: block;
+  text-align: center;
+  margin: 10px 0;
+  font-weight: bold;
+}

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   addDoc,
@@ -9,12 +9,12 @@ import {
   serverTimestamp,
   deleteDoc,
   doc,
-  getFirestore,
 } from 'firebase/firestore'
 import { auth, db as firestoreDb } from '../../firebase'
 import { onAuthStateChanged } from 'firebase/auth'
 import { getDatabase, ref, get } from 'firebase/database'
 import { toast } from 'react-toastify'
+import style from './style.module.css'
 
 const Chat = () => {
   const navigate = useNavigate()
@@ -23,6 +23,7 @@ const Chat = () => {
   const [newMessage, setNewMessage] = useState('')
   const [showIcon, setShowIcon] = useState(false)
   const [readMore, setReadMore] = useState({})
+  const bottomRef = useRef(null)
 
   useEffect(() => {
     const fetchUserData = async (user) => {
@@ -61,6 +62,10 @@ const Chat = () => {
     }
   }, [navigate])
 
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [messages])
+
   const Logout = async () => {
     try {
       await auth.signOut()
@@ -92,7 +97,12 @@ const Chat = () => {
     }
   }
 
-  const deleteMessage = async (id) => {
+  const deleteMessage = async (id, messageUid) => {
+    if (user.uid !== messageUid) {
+      toast.error('You can only delete your own messages')
+      return
+    }
+
     try {
       await deleteDoc(doc(firestoreDb, 'messages', id))
       toast.dismiss()
@@ -147,6 +157,13 @@ const Chat = () => {
     }))
   }
 
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault()
+      sendMessage()
+    }
+  }
+
   return (
     <>
       <div className="chat_content">
@@ -166,8 +183,13 @@ const Chat = () => {
             ? msg.data.text
             : msg.data.text.substring(0, 150)
 
+          const isOwnMessage = user?.uid === msg.data.uid
+
           return (
-            <div className="user" key={msg?.id}>
+            <div
+              className={`user ${isOwnMessage ? 'ownMessage' : 'otherMessage'}`}
+              key={msg?.id}
+            >
               {msg?.data?.photoUrl ? (
                 <img src={msg?.data?.photoUrl} alt="img" />
               ) : (
@@ -196,13 +218,16 @@ const Chat = () => {
               {showDate && (
                 <span className="formattedDate">{formattedDate}</span>
               )}
-              <i
-                className="fa-solid fa-trash"
-                onClick={() => deleteMessage(msg.id)}
-              ></i>
+              {user?.uid === msg.data.uid && (
+                <i
+                  className="fa-solid fa-trash"
+                  onClick={() => deleteMessage(msg.id, msg.data.uid)}
+                ></i>
+              )}
             </div>
           )
         })}
+        <div ref={bottomRef} />
       </div>
       <div className="container">
         <div className="chat_input">
@@ -212,6 +237,7 @@ const Chat = () => {
               setNewMessage(e.target.value)
               setShowIcon(e.target.value.trim() !== '')
             }}
+            onKeyDown={handleKeyPress}
           />
           {showIcon && (
             <button>

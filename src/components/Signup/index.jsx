@@ -19,6 +19,7 @@ const Signup = () => {
     handleSubmit,
     reset,
     formState: { errors, isSubmitting },
+    watch,
   } = useForm()
 
   const singUpGoogle = async () => {
@@ -82,6 +83,8 @@ const Signup = () => {
     }
   }
 
+  const password = watch('password')
+
   return (
     <section className="input_sec">
       <div className="input">
@@ -118,14 +121,42 @@ const Signup = () => {
               ></i>
             )}
           </div>
+          <div>
+            <input
+              placeholder="Confirm Password"
+              {...register('confirmPassword', {
+                required: 'Please confirm your password',
+                validate: (value) =>
+                  value === password || 'Passwords do not match',
+              })}
+              type={showPassword ? 'text' : 'password'}
+            />
+            {showPassword ? (
+              <i className="fa-solid fa-eye" onClick={handleShowPassword}></i>
+            ) : (
+              <i
+                className="fa-solid fa-eye-slash"
+                onClick={handleShowPassword}
+              ></i>
+            )}
+          </div>
+          {errors.displayName && (
+            <p className={style.error}>{errors.displayName.message}</p>
+          )}
           {errors.email && (
             <p className={style.error}>{errors.email.message}</p>
+          )}
+          {errors.password && (
+            <p className={style.error}>{errors.password.message}</p>
+          )}
+          {errors.confirmPassword && (
+            <p className={style.error}>{errors.confirmPassword.message}</p>
           )}
           <button className={style.button}>
             {isSubmitting ? <Disabled /> : 'Sign Up'}
           </button>
         </form>
-        <div>
+        <div className="btn-google">
           <button type="submit" onClick={singUpGoogle} className={style.button}>
             <i className="fa-brands fa-google"></i>
             {isSubmitting ? <Disabled /> : 'Sign In with Google'}
