@@ -14,7 +14,6 @@ import { auth, db as firestoreDb } from '../../firebase'
 import { onAuthStateChanged } from 'firebase/auth'
 import { getDatabase, ref, get } from 'firebase/database'
 import { toast } from 'react-toastify'
-import style from './style.module.css'
 
 const Chat = () => {
   const navigate = useNavigate()
@@ -166,7 +165,7 @@ const Chat = () => {
 
   return (
     <>
-      <div className="chat_content">
+      <div className="chat_content" onKeyDown={handleKeyPress} tabIndex="0">
         {messages?.map((msg) => {
           const timestamp = msg?.data?.timestamp?.toDate()
           const formattedDate = formatDate(timestamp)
@@ -237,7 +236,6 @@ const Chat = () => {
               setNewMessage(e.target.value)
               setShowIcon(e.target.value.trim() !== '')
             }}
-            onKeyDown={handleKeyPress}
           />
           {showIcon && (
             <button>

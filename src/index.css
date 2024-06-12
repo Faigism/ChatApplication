@@ -148,7 +148,7 @@ body {
   min-width: 500px;
   .chat_content {
     overflow-y: scroll;
-    padding: 10px 22px;
+    padding: 40px 22px;
     height: 80vh;
     width: 100%;
     box-shadow: rgba(0, 0, 0, 0.4) 0px 60px 40px -7px;
